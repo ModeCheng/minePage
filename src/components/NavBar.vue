@@ -14,15 +14,4 @@
 </template>
 
 <script setup lang="ts">
-import Lenis from '@studio-freight/lenis'
-import { onMounted } from 'vue'
-
-onMounted(() => {
-  const lenis = new Lenis({ lerp: 0.1 })
-  function raf(time: number) {
-    lenis.raf(time)
-    requestAnimationFrame(raf)
-  }
-  requestAnimationFrame(raf)
-})
 </script>

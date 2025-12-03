@@ -8,10 +8,7 @@
 </template>
 
 <script setup lang="ts">
-import { ref, onMounted } from 'vue'
-import gsap from 'gsap'
-import { ScrollTrigger } from 'gsap/ScrollTrigger'
-gsap.registerPlugin(ScrollTrigger)
+import { ref, onMounted, onUnmounted } from 'vue'
 
 const total = ref(0)
 const current = ref(1)
@@ -21,16 +18,19 @@ function updatePad() {
   currentPad.value = String(current.value).padStart(2, '0')
 }
 
-onMounted(() => {
-  const sections = Array.from(document.querySelectorAll('section'))
-  total.value = sections.length
-  sections.forEach((s, i) => {
-    ScrollTrigger.create({
-      trigger: s,
-      start: 'top center',
-      onEnter: () => { current.value = i + 1; updatePad() }
-    })
-  })
+function onSlide(e: Event) {
+  const d = (e as CustomEvent).detail as { index: number, total: number }
+  if (!d) return
+  total.value = d.total
+  current.value = d.index + 1
   updatePad()
+}
+
+onMounted(() => {
+  window.addEventListener('slide-change', onSlide as any)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('slide-change', onSlide as any)
 })
 </script>

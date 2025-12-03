@@ -7,18 +7,17 @@ import { ref, onMounted, onUnmounted } from 'vue'
 
 const progress = ref(0)
 
-function update() {
-  const scrollTop = document.documentElement.scrollTop || document.body.scrollTop
-  const scrollHeight = document.documentElement.scrollHeight - document.documentElement.clientHeight
-  progress.value = Math.min(100, Math.max(0, (scrollTop / scrollHeight) * 100))
+function onSlide(e: Event) {
+  const d = (e as CustomEvent).detail as { index: number, total: number }
+  if (!d) return
+  progress.value = Math.round(((d.index + 1) / d.total) * 100)
 }
 
 onMounted(() => {
-  update()
-  window.addEventListener('scroll', update, { passive: true })
+  window.addEventListener('slide-change', onSlide as any)
 })
 
 onUnmounted(() => {
-  window.removeEventListener('scroll', update)
+  window.removeEventListener('slide-change', onSlide as any)
 })
 </script>
