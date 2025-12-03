@@ -1,0 +1,24 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+:root {
+  --bg-start: #0f172a;
+  --bg-end: #0b1020;
+}
+
+html, body, #app {
+  height: 100%;
+}
+
+body {
+  background-image: theme('backgroundImage.gradientFlow');
+  background-size: 200% 200%;
+  animation: shimmer 12s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  body {
+    animation: none;
+  }
+}
