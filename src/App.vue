@@ -16,7 +16,7 @@ import { useHead } from '@vueuse/head'
 const showLoader = ref(true)
 
 useHead({
-  title: 'MinePage | 个人介绍',
+  title: 'MinePage | 个11人介绍',
   meta: [
     { name: 'description', content: '前端工程师的绚丽个人介绍站点' },
     { property: 'og:title', content: 'MinePage' },
